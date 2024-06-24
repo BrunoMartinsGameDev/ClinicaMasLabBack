@@ -8,6 +8,7 @@ public class ClinicamaslabbackApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ClinicamaslabbackApplication.class, args);
+		//a
 	}
 
 }
