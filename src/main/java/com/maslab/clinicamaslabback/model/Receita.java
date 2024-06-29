@@ -1,7 +1,5 @@
 package com.maslab.clinicamaslabback.model;
 
-import java.util.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +10,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Consulta {
+public class Receita {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,5 +23,7 @@ public class Consulta {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
-    private Date data;
+    private String descricao;
+
+    // Getters e Setters
 }
