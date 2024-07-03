@@ -1,9 +1,9 @@
 package com.maslab.clinicamaslabback.model;
 
-public class UserRole {
-    
-    ADMIN("Medico"),
-    USER("Paciente");
+public enum UserRole {
+    ADMIN("admin"),
+    PACIENTE("paciente"),
+    MEDICO("médico");
 
     private String role;
 
