@@ -1,11 +1,14 @@
 package com.maslab.clinicamaslabback.model;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,24 +21,22 @@ import lombok.Setter;
 @Entity
 
 
-public class Receitas {
+public class Receita {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "Descricao")
-    private String descricao;
-
-    @OneToMany(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medico_id")
-    @JsonBackReference("receitasReference")
+    @JsonBackReference("receitaReference")
     private Medico medico;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id")
-    @JsonBackReference("receitasReference")
+    @JsonBackReference("receitaReference")
     private Paciente paciente;
-    
+
+    private String descricao;
     
 }

@@ -1,7 +1,5 @@
 package com.maslab.clinicamaslabback.model;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -21,23 +19,21 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Consulta {
-    
+public class Prescricao {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Date data;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medico_id")
-    @JsonBackReference
+    @JsonBackReference("prescricaoReference")
     private Medico medico;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id")
-    @JsonBackReference
+    @JsonBackReference("prescricaoReference")
     private Paciente paciente;
 
-
+    private String descricao;
 }
