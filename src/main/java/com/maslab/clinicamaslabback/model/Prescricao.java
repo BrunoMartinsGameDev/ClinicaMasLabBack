@@ -1,6 +1,6 @@
 package com.maslab.clinicamaslabback.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,12 +27,10 @@ public class Prescricao {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medico_id")
-    @JsonBackReference("prescricaoReference")
     private Medico medico;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id")
-    @JsonBackReference("prescricaoReference")
     private Paciente paciente;
 
     private String descricao;
