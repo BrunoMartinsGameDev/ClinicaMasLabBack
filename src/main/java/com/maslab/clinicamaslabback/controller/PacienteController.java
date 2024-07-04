@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maslab.clinicamaslabback.model.Medico;
 import com.maslab.clinicamaslabback.model.Paciente;
 import com.maslab.clinicamaslabback.repository.PacienteRepository;
 
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "Paciente")
 @RestController
-@RequestMapping("/Paciente")
+@RequestMapping("/paciente")
 public class PacienteController {
 
     @Autowired

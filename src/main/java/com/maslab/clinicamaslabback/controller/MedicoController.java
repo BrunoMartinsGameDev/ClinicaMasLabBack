@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @Tag(name = "Medico")
 @RestController
-@RequestMapping("/Medico")
+@RequestMapping("/medico")
 public class MedicoController {
 
     @Autowired
