@@ -3,6 +3,7 @@ package com.maslab.clinicamaslabback.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,6 +62,20 @@ public class ConsultaController {
         }
 
         return consultaRepository.save(consulta);
+    }
+
+    @PutMapping("/{id}")
+    public Consulta putConsulta(@PathVariable Long id, @RequestBody Consulta consulta) {
+        
+        Optional<Consulta> consultaData = consultaRepository.findById(id);
+
+        if (consultaData.isPresent()){
+            Consulta _consulta = consultaData.get();
+            BeanUtils.copyProperties(consulta, _consulta, "id");
+            return consultaRepository.save(_consulta);
+        } else {
+            throw new IndexOutOfBoundsException("Consulta não cadastrada");
+        }
     }
 
     @DeleteMapping("/{id}")
