@@ -48,7 +48,7 @@ public class PacienteController {
             BeanUtils.copyProperties(paciente, _paciente, "id");
             return pacienteRepository.save(_paciente);
         } else {
-            throw new IndexOutOfBoundsException("Médico não cadastrado");
+            throw new IndexOutOfBoundsException("Paciente não cadastrado");
         }
     }
     
