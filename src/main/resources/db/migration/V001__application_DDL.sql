@@ -1,6 +1,6 @@
 CREATE TABLE prontuario(
     id INT NOT NULL AUTO_INCREMENT primary key,
-    descricao VARCHAR(255) NOT NULL,
+    descricao VARCHAR(255) NOT NULL
 );
 CREATE TABLE usuario(
     id INT NOT NULL AUTO_INCREMENT primary key,
@@ -9,7 +9,7 @@ CREATE TABLE usuario(
     role VARCHAR(255) NOT NULL,
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    telefone VARCHAR(255) NOT NULL
+    telefone VARCHAR(255) NOT NULL,
     crm VARCHAR(255),
     cpf VARCHAR(255),
     especialidade VARCHAR(255),
@@ -29,7 +29,7 @@ CREATE TABLE feedback(
     id INT NOT NULL AUTO_INCREMENT primary key,
     descricao VARCHAR(255) NOT NULL,
     medico_id INT,
-    CONSTRAINT FOREIGN KEY (medico_id) REFERENCES medico(id)    
+    CONSTRAINT FOREIGN KEY (medico_id) REFERENCES feedback(id)    
 );
 CREATE TABLE prescricao(
     id INT NOT NULL AUTO_INCREMENT primary key,
