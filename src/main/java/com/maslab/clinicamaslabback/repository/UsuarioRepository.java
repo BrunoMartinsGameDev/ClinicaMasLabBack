@@ -1,9 +1,11 @@
 package com.maslab.clinicamaslabback.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import com.maslab.clinicamaslabback.model.Usuario;
+import com.maslab.clinicamaslabback.model.user.Usuario;
 
 public interface UsuarioRepository extends JpaRepository <Usuario, Long> {
     
+        UserDetails findByLogin(String login);
 }

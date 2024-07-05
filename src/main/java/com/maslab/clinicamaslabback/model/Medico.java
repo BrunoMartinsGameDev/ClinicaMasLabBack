@@ -2,6 +2,8 @@ package com.maslab.clinicamaslabback.model;
 
 import java.util.Set;
 
+import com.maslab.clinicamaslabback.model.user.Usuario;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
