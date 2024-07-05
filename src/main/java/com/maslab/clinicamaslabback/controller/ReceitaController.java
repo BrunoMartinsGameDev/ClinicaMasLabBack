@@ -40,40 +40,40 @@ public class ReceitaController {
         return receitaRepository.findAll();
     }
 
-    @GetMapping("/id")
-    public Set<Receita> getReceitasByPacienteID(@PathVariable Long id) {
-        Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
+    // @GetMapping("/id")
+    // public Set<Receita> getReceitasByPacienteID(@PathVariable Long id) {
+    //     Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
 
-        if (optionalPaciente.isPresent()) {
+    //     if (optionalPaciente.isPresent()) {
             
-            Paciente paciente = optionalPaciente.get();
+    //         Paciente paciente = optionalPaciente.get();
 
-            return paciente.getReceitas();
+    //         return paciente.getReceitas();
 
-        } else {
-            throw new IndexOutOfBoundsException("Paciente não cadastrado");
-        }
-    }
+    //     } else {
+    //         throw new IndexOutOfBoundsException("Paciente não cadastrado");
+    //     }
+    // }
 
-    @PostMapping
-    public Receita CreateReceita(@RequestBody Receita receita) {
+    // @PostMapping
+    // public Receita CreateReceita(@RequestBody Receita receita) {
         
-        Optional<Paciente> optionalPaciente = pacienteRepository.findById(receita.getPaciente().getId());
-        Optional<Medico> optionalMedico = medicoRepository.findById(receita.getMedico().getId());
+    //     Optional<Paciente> optionalPaciente = pacienteRepository.findById(receita.getPaciente().getId());
+    //     Optional<Medico> optionalMedico = medicoRepository.findById(receita.getMedico().getId());
 
-        if (optionalPaciente.isPresent() && optionalMedico.isPresent()) {
+    //     if (optionalPaciente.isPresent() && optionalMedico.isPresent()) {
             
-            receita.setPaciente(optionalPaciente.get());
-            receita.setMedico(optionalMedico.get());
+    //         receita.setPaciente(optionalPaciente.get());
+    //         receita.setMedico(optionalMedico.get());
 
-            receita.getPaciente().getReceitas().add(receita);
-            receita.getMedico().getReceitas().add(receita);
-        } else {
-            throw new IndexOutOfBoundsException("Paciente ou médico não cadastrados");
-        }
+    //         receita.getPaciente().getReceitas().add(receita);
+    //         receita.getMedico().getReceitas().add(receita);
+    //     } else {
+    //         throw new IndexOutOfBoundsException("Paciente ou médico não cadastrados");
+    //     }
 
-        return receitaRepository.save(receita);
-    }
+    //     return receitaRepository.save(receita);
+    // }
     
 
     //Sem update nem delete
