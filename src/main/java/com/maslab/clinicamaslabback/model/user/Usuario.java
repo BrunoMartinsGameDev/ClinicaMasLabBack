@@ -40,6 +40,12 @@ public class Usuario implements Serializable, UserDetails{
     
     protected String telefone;
 
+    public Usuario(String login, String senha, UserRole role){
+        this.login = login;
+        this.senha = senha;
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
@@ -76,4 +82,5 @@ public class Usuario implements Serializable, UserDetails{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
     }
+
 }

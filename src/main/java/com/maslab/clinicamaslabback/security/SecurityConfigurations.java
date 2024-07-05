@@ -28,8 +28,9 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/cadastro").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/curso", "/turma", "/disciplina", "/estudante").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/curso/{id}", "/turma/{id}", "/disciplina/{id}", "/estudante/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/medico").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/precricao", "/prontuario", "receita").hasRole("MEDICO")
+                        .requestMatchers(HttpMethod.POST, "/consulta", "/feedback").hasRole("PACIENTE")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

@@ -1,6 +1,5 @@
 package com.maslab.clinicamaslabback.security;
 
-import com.jams.faculdade.repository.UserRepository;
 import com.maslab.clinicamaslabback.repository.UsuarioRepository;
 
 import jakarta.servlet.FilterChain;
@@ -29,9 +28,9 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if(token != null){
             var login = tokenService.validateToken(token);
-            UserDetails user = usuarioRepository.findByLogin(login);
+            UserDetails usuario = usuarioRepository.findByLogin(login);
 
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);

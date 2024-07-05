@@ -1,13 +1,13 @@
 package com.maslab.clinicamaslabback.controller;
 
-import com.jams.faculdade.model.user.AuthenticationDTO;
-import com.jams.faculdade.model.user.LoginResponseDTO;
-import com.jams.faculdade.model.user.RegisterDTO;
-import com.jams.faculdade.model.user.User;
-import com.jams.faculdade.repository.UserRepository;
-import com.jams.faculdade.security.TokenService;
+import com.maslab.clinicamaslabback.model.user.AuthenticationDTO;
+import com.maslab.clinicamaslabback.model.user.LoginResponseDTO;
+import com.maslab.clinicamaslabback.model.user.RegisterDTO;
+import com.maslab.clinicamaslabback.model.user.Usuario;
 import com.maslab.clinicamaslabback.repository.UsuarioRepository;
+import com.maslab.clinicamaslabback.security.TokenService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Autenticação")
 @RestController
 @RequestMapping("auth")
 public class AuthenticationController {
@@ -36,17 +37,17 @@ public class AuthenticationController {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/cadastro")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
-        if(this.userRepository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
+        if(this.usuarioRepository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.login(), encryptedPassword, data.role());
+        Usuario newUser = new Usuario(data.login(), encryptedPassword, data.role());
 
         this.usuarioRepository.save(newUser);
 
