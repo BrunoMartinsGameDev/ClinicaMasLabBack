@@ -55,8 +55,6 @@ public class ConsultaController {
             consulta.setPaciente(optionalPaciente.get());
             consulta.setMedico(optionalMedico.get());
 
-            consulta.getPaciente().getConsultas().add(consulta);
-            consulta.getMedico().getConsultas().add(consulta);
         } else {
             throw new IndexOutOfBoundsException("Paciente ou médico não cadastrados");
         }

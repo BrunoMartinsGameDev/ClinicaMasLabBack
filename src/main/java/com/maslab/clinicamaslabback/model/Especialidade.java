@@ -2,11 +2,9 @@ package com.maslab.clinicamaslabback.model;
 
 
 public enum Especialidade {
-
     CARDIOLOGIA("cardiologia"),
     ORTOPEDIA("ortopedia"),
     OFTAMOLOGIA("oftalmologia");
-
 
     private String descricao;
 

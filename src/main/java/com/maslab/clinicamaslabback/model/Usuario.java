@@ -1,54 +1,36 @@
 package com.maslab.clinicamaslabback.model;
 
-import java.util.Set;
+import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import lombok.Data;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-public class Usuario {
+public class Usuario implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
-    private String login;
+    protected String login;
 
-    private String senha;
+    protected String senha;
 
-    private UserRole role;
+    @Enumerated(EnumType.STRING)
+    protected UserRole role;
 
-    private String nome;
+    protected String nome;
 
-    private Email email;
+    protected String email;
     
-    private String telefone;
-
-    @OneToMany(mappedBy = "usuario" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private Set<Consulta> consultas;
-    
-    @OneToMany(mappedBy = "usuario" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private Set<Prescricao> prescricoes;
-
-    @OneToMany(mappedBy = "usuario" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private Set<Receita> receitas;
+    protected String telefone;
 }

@@ -2,30 +2,29 @@ package com.maslab.clinicamaslabback.model;
 
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 public class Medico extends Usuario{
 
     private String crm;
 
-    private String especialidade;
+    @Enumerated(EnumType.STRING)
+    private Especialidade especialidade;
 
     @OneToMany(mappedBy = "medico" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
-    @JsonManagedReference
     private Set<Feedback> feedbacks;
+
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Prescricao> prescricoes;
 
 }
