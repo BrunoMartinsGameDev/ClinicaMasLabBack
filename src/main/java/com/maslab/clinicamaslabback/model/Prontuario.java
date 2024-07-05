@@ -30,7 +30,7 @@ public class Prontuario {
     @Column(name = "Descricao")
     private String descricao;
 
-        @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id")
     @JsonBackReference("prontuarioReference")
     private Paciente paciente;

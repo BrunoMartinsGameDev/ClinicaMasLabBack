@@ -47,4 +47,8 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<Prescricao> prescricoes;
+
+    @OneToMany(mappedBy = "usuario" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Set<Receita> receitas;
 }
