@@ -7,15 +7,16 @@ CREATE TABLE usuario(
     login VARCHAR(255) NOT NULL,
     senha VARCHAR(255) NOT NULL,
     role VARCHAR(255) NOT NULL,
-    nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    telefone VARCHAR(255) NOT NULL,
+    nome VARCHAR(255) ,
+    email VARCHAR(255) ,
+    telefone VARCHAR(255) ,
     crm VARCHAR(255),
     cpf VARCHAR(255),
     especialidade VARCHAR(255),
+    user_type VARCHAR(255),
     prontuario_id INT,
-    isMedico BOOLEAN,
-    isAtivo BOOLEAN,
+    is_medico BOOLEAN,
+    is_ativo BOOLEAN,
     CONSTRAINT FOREIGN KEY (prontuario_id) REFERENCES prontuario(id)
 );
 CREATE TABLE consulta(

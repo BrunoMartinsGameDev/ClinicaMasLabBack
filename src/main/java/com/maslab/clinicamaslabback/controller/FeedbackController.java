@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.maslab.clinicamaslabback.model.Feedback;
 import com.maslab.clinicamaslabback.model.Medico;
 import com.maslab.clinicamaslabback.repository.FeedbackRepository;
-import com.maslab.clinicamaslabback.repository.MedicoRepository;
+import com.maslab.clinicamaslabback.repository.UsuarioRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -28,7 +28,7 @@ public class FeedbackController {
     @Autowired
     private FeedbackRepository feedbackRepository;
     @Autowired
-    private MedicoRepository medicoRepository;
+    private UsuarioRepository medicoRepository;
 
 
     @GetMapping
@@ -38,7 +38,7 @@ public class FeedbackController {
 
     @GetMapping("/id")
     public Set<Feedback> getFeedbacksByMedicoID(@PathVariable Long id) {
-        Optional<Medico> optionalMedico = medicoRepository.findById(id);
+        Optional<Medico> optionalMedico = medicoRepository.findByIdAndIsMedicoTrue(id);
 
         if (optionalMedico.isPresent()) {
             
@@ -55,7 +55,7 @@ public class FeedbackController {
     @PostMapping
     public Feedback CreateFeedback(@RequestBody Feedback feedback) {
         
-        Optional<Medico> optionalMedico = medicoRepository.findById(feedback.getMedico().getId());
+        Optional<Medico> optionalMedico = medicoRepository.findByIdAndIsMedicoTrue(feedback.getMedico().getId());
 
         if (optionalMedico.isPresent()) {
             

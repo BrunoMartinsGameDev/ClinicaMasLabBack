@@ -20,8 +20,7 @@ import com.maslab.clinicamaslabback.model.Consulta;
 import com.maslab.clinicamaslabback.model.Medico;
 import com.maslab.clinicamaslabback.model.Paciente;
 import com.maslab.clinicamaslabback.repository.ConsultaRepository;
-import com.maslab.clinicamaslabback.repository.MedicoRepository;
-import com.maslab.clinicamaslabback.repository.PacienteRepository;
+import com.maslab.clinicamaslabback.repository.UsuarioRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -34,9 +33,7 @@ public class ConsultaController {
     @Autowired
     private ConsultaRepository consultaRepository;
     @Autowired
-    private PacienteRepository pacienteRepository;
-    @Autowired
-    private MedicoRepository medicoRepository;
+    private UsuarioRepository usuarioRepository;
 
 
     @GetMapping
@@ -47,8 +44,8 @@ public class ConsultaController {
     @PostMapping
     public Consulta CreateConsulta(@RequestBody Consulta consulta) {
 
-        Optional<Paciente> optionalPaciente = pacienteRepository.findById(consulta.getPaciente().getId());
-        Optional<Medico> optionalMedico = medicoRepository.findById(consulta.getMedico().getId());
+        Optional<Paciente> optionalPaciente = usuarioRepository.findByIdAndIsMedicoFalse(consulta.getPaciente().getId());
+        Optional<Medico> optionalMedico = usuarioRepository.findByIdAndIsMedicoTrue(consulta.getMedico().getId());
 
         if (optionalPaciente.isPresent() && optionalMedico.isPresent()) {
             

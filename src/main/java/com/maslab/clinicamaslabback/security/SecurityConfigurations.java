@@ -21,12 +21,18 @@ public class SecurityConfigurations {
     @Autowired
     SecurityFilter securityFilter;
 
+    public static String[] WHITELIST = {
+        "/v3/api-docs/**",
+        "/swagger-ui/**"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(WHITELIST).permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/cadastro").permitAll()
                         .requestMatchers(HttpMethod.POST, "/medico").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/precricao", "/prontuario", "receita").hasRole("MEDICO")

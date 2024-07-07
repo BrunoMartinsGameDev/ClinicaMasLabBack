@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.maslab.clinicamaslabback.model.Paciente;
 import com.maslab.clinicamaslabback.model.Prontuario;
-import com.maslab.clinicamaslabback.repository.PacienteRepository;
 import com.maslab.clinicamaslabback.repository.ProntuarioRepository;
+import com.maslab.clinicamaslabback.repository.UsuarioRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -28,7 +28,7 @@ public class ProntuarioController {
     @Autowired
     private ProntuarioRepository prontuarioRepository;
     @Autowired
-    private PacienteRepository pacienteRepository;
+    private UsuarioRepository pacienteRepository;
 
 
     @GetMapping
@@ -38,7 +38,7 @@ public class ProntuarioController {
 
     @GetMapping("/id")
     public Prontuario getProntuariosByPacienteID(@PathVariable Long id) {
-        Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
+        Optional<Paciente> optionalPaciente = pacienteRepository.findByIdAndIsMedicoFalse(id);
 
         if (optionalPaciente.isPresent()) {
             
@@ -54,7 +54,7 @@ public class ProntuarioController {
     @PostMapping
         public Prontuario CreateProntuario(@RequestBody Prontuario prontuario) {
 
-        Optional<Paciente> optionalPaciente = pacienteRepository.findById(prontuario.getPaciente().getId());
+        Optional<Paciente> optionalPaciente = pacienteRepository.findByIdAndIsMedicoFalse(prontuario.getPaciente().getId());
 
         if (optionalPaciente.isPresent()) {
             

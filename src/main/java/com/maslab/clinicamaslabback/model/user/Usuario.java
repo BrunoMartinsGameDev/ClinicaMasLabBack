@@ -1,6 +1,5 @@
 package com.maslab.clinicamaslabback.model.user;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -8,6 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,11 +19,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 @Entity
-public class Usuario implements Serializable, UserDetails{
+public class Usuario implements  UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +44,14 @@ public class Usuario implements Serializable, UserDetails{
     protected String email;
     
     protected String telefone;
+
+    protected Boolean isMedico;
+
+    @Column(name = "is_ativo")
+    protected Boolean isAtivo;
+
+    @Column(insertable=false, updatable=false)
+    private String user_type;
 
     public Usuario(String login, String senha, UserRole role){
         this.login = login;
@@ -79,8 +92,7 @@ public class Usuario implements Serializable, UserDetails{
 
     @Override
     public String getPassword() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+        return getSenha();
     }
 
 }
