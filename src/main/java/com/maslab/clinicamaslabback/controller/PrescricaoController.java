@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.maslab.clinicamaslabback.model.Medico;
 import com.maslab.clinicamaslabback.model.Paciente;
 import com.maslab.clinicamaslabback.model.Prescricao;
-import com.maslab.clinicamaslabback.repository.MedicoRepository;
-import com.maslab.clinicamaslabback.repository.PacienteRepository;
 import com.maslab.clinicamaslabback.repository.PrescricaoRepository;
+import com.maslab.clinicamaslabback.repository.UsuarioRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,10 +28,7 @@ public class PrescricaoController {
     
     @Autowired
     private PrescricaoRepository prescricaoRepository;
-    @Autowired
-    private MedicoRepository medicoRepository;
-    @Autowired
-    private PacienteRepository pacienteRepository;
+    private UsuarioRepository usuarioRepository;
 
 
     @GetMapping
@@ -42,7 +38,7 @@ public class PrescricaoController {
 
     @GetMapping("/id")
     public Set<Prescricao> getPrescricoesByPacienteID(@PathVariable Long id) {
-        Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
+        Optional<Paciente> optionalPaciente = usuarioRepository.findByIdAndIsMedicoFalse(id);
 
         if (optionalPaciente.isPresent()) {
             
@@ -58,8 +54,8 @@ public class PrescricaoController {
     @PostMapping
     public Prescricao CreatePrescricao(@RequestBody Prescricao prescricao) {
         
-        Optional<Paciente> optionalPaciente = pacienteRepository.findById(prescricao.getPaciente().getId());
-        Optional<Medico> optionalMedico = medicoRepository.findById(prescricao.getMedico().getId());
+        Optional<Paciente> optionalPaciente = usuarioRepository.findByIdAndIsMedicoFalse(prescricao.getPaciente().getId());
+        Optional<Medico> optionalMedico = usuarioRepository.findByIdAndIsMedicoTrue(prescricao.getMedico().getId());
 
         if (optionalPaciente.isPresent() && optionalMedico.isPresent()) {
             

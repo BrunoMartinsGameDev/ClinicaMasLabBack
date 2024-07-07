@@ -1,4 +1,4 @@
-package com.maslab.clinicamaslabback.model;
+package com.maslab.clinicamaslabback.model.user;
 
 public enum UserRole {
     ADMIN("admin"),

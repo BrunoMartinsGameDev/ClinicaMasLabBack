@@ -1,11 +1,11 @@
 -- Inserindo médicos
-INSERT INTO usuario (login, senha, role, nome, email, telefone, crm, especialidade, prontuario_id, isMedico, isAtivo)
+INSERT INTO usuario (login, senha, role, nome, email, telefone, crm, especialidade, prontuario_id, is_medico, is_ativo)
 VALUES
 ('medico1', 'senha123', 'MEDICO', 'Dr. João', 'joao@hospital.com', '123456789', 'CRM12345', 'Cardiologia', NULL, TRUE, TRUE),
 ('medico2', 'senha123', 'MEDICO', 'Dra. Maria', 'maria@hospital.com', '987654321', 'CRM67890', 'Pediatria', NULL, TRUE, TRUE);
 
 -- Inserindo pacientes
-INSERT INTO usuario (login, senha, role, nome, email, telefone, cpf, prontuario_id, isMedico, isAtivo)
+INSERT INTO usuario (login, senha, role, nome, email, telefone, cpf, prontuario_id, is_medico, is_ativo)
 VALUES
 ('paciente1', 'senha123', 'PACIENTE', 'José da Silva', 'jose@paciente.com', '111222333', 'CPF123456789', 1, FALSE, TRUE),
 ('paciente2', 'senha123', 'PACIENTE', 'Ana de Souza', 'ana@paciente.com', '444555666', 'CPF987654321', 2, FALSE, TRUE);

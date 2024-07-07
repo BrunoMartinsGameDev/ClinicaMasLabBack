@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maslab.clinicamaslabback.model.Paciente;
-import com.maslab.clinicamaslabback.repository.PacienteRepository;
+import com.maslab.clinicamaslabback.repository.UsuarioRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,24 +24,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PacienteController {
 
     @Autowired
-    private PacienteRepository pacienteRepository;
+    private UsuarioRepository pacienteRepository;
 
     @GetMapping
     public List<Paciente> getAllPacientes(@RequestBody Paciente paciente) {
-        return pacienteRepository.findAll();
+        return pacienteRepository.findAllByIsMedicoFalse();
     }
 
     @GetMapping("/{nome}")
     public List<Paciente> getPacientesByNome(@PathVariable String nome) {
 
-        List<Paciente> pacientes = pacienteRepository.findByNome(nome);
+        List<Paciente> pacientes = pacienteRepository.findByNomeAndIsMedicoFalse(nome);
         return pacientes;
     }
 
     @PutMapping("/{id}")
     public Paciente putPaciente(@PathVariable Long id, @RequestBody Paciente paciente) {
         
-        Optional<Paciente> pacienteData = pacienteRepository.findById(id);
+        Optional<Paciente> pacienteData = pacienteRepository.findByIdAndIsMedicoFalse(id);
 
         if (pacienteData.isPresent()){
             Paciente _paciente = pacienteData.get();
