@@ -2,6 +2,7 @@ package com.maslab.clinicamaslabback.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,21 @@ public class ConsultaController {
     @GetMapping
     public List<Consulta> GetAllConsultas() {
         return consultaRepository.findAll();
+    }
+
+    @GetMapping("/id")
+    public Set<Consulta> getConsultasByPacienteID(@PathVariable Long id) {
+        Optional<Paciente> optionalPaciente = usuarioRepository.findByIdAndIsMedicoFalse(id);
+
+        if (optionalPaciente.isPresent()) {
+            
+            Paciente paciente = optionalPaciente.get();
+
+            return paciente.getConsultas();
+
+        } else {
+            throw new IndexOutOfBoundsException("Paciente não cadastrado");
+        }
     }
 
     @PostMapping

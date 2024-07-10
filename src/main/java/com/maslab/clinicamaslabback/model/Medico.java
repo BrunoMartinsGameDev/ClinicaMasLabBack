@@ -14,10 +14,12 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Getter
 @Entity
 @DiscriminatorValue("MEDICO")
 public class Medico extends Usuario{
@@ -40,4 +42,6 @@ public class Medico extends Usuario{
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Prescricao> prescricoes;
 
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Consulta> consultas;
 }
