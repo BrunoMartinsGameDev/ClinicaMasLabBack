@@ -8,9 +8,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.maslab.clinicamaslabback.model.Consulta;
 import com.maslab.clinicamaslabback.model.Medico;
 import com.maslab.clinicamaslabback.model.Paciente;
+import com.maslab.clinicamaslabback.model.user.Usuario;
 import com.maslab.clinicamaslabback.repository.ConsultaRepository;
 import com.maslab.clinicamaslabback.repository.UsuarioRepository;
 
@@ -42,10 +46,11 @@ public class ConsultaController {
         return consultaRepository.findAll();
     }
 
-    @GetMapping("/id")
-    public Set<Consulta> getConsultasByPacienteID(@PathVariable Long id) {
-        Optional<Paciente> optionalPaciente = usuarioRepository.findByIdAndIsMedicoFalse(id);
-
+    @GetMapping("/findby-paciente-id")
+    public Set<Consulta> getConsultasByPacienteID() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuario = (Usuario) auth.getPrincipal();
+        Optional<Paciente> optionalPaciente = usuarioRepository.findByIdAndIsMedicoFalse(usuario.getId());
         if (optionalPaciente.isPresent()) {
             
             Paciente paciente = optionalPaciente.get();
@@ -56,6 +61,7 @@ public class ConsultaController {
             throw new IndexOutOfBoundsException("Paciente não cadastrado");
         }
     }
+
 
     @PostMapping
     public Consulta CreateConsulta(@RequestBody Consulta consulta) {

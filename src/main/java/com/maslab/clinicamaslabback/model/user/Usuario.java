@@ -45,6 +45,7 @@ public class Usuario implements  UserDetails{
     
     protected String telefone;
 
+    @Column(name = "is_medico")
     protected Boolean isMedico;
 
     @Column(name = "is_ativo")
