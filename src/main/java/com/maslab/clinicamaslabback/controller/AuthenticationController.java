@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Autenticação")
 @RestController
 @RequestMapping("/auth")
-public class AuthenticationController {
+public class AuthenticationController {  // Controlador para gerenciar as operações de autenticação
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -38,26 +38,32 @@ public class AuthenticationController {
          try {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
+        // Autentica o usuário com base nas credenciais fornecidas
 
         var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+        // Gera um token JWT para o usuário autenticado
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
     } catch (Exception e) {
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Login failed: " + e.getMessage());
+        // Retorna um token de autenticação ou uma mensagem de erro se a autenticação falhar
     }
     }
 
     @PostMapping("/cadastro")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         if(this.usuarioRepository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
+        // Verifica se o usuário já existe no banco de dados
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         Usuario newUser = new Usuario(data.login(), encryptedPassword, data.role());
         newUser.setUser_type(data.role().name());
+        // Cria um novo usuário com a senha criptografada e o salva no banco de dados
 
         this.usuarioRepository.save(newUser);
 
         return ResponseEntity.ok().build();
+        // Retorna uma resposta de sucesso se o registro for bem-sucedido
     }
 }
